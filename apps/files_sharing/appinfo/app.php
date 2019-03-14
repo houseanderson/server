@@ -45,6 +45,9 @@ $eventDispatcher->addListener(
 		\OCP\Util::addScript('files_sharing', 'dist/additionalScripts');
 	}
 );
+\OC::$server->getEventDispatcher()->addListener('\OCP\Collaboration::loadAdditionalScripts', function () {
+	\OCP\Util::addScript('files_sharing', 'dist/collaboration');
+});
 
 $config = \OC::$server->getConfig();
 $shareManager = \OC::$server->getShareManager();
