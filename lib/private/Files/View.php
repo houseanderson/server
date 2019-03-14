@@ -779,6 +779,8 @@ class View {
 					$storage2 = $mount2->getStorage();
 					$internalPath1 = $mount1->getInternalPath($absolutePath1);
 					$internalPath2 = $mount2->getInternalPath($absolutePath2);
+					$sourceParentMount = $this->getMount(dirname($path1));
+					$targetParentMount = $this->getMount(dirname($path2));
 
 					$this->changeLock($path1, ILockingProvider::LOCK_EXCLUSIVE, true);
 					try {
@@ -786,7 +788,7 @@ class View {
 
 						if ($internalPath1 === '') {
 							if ($mount1 instanceof MoveableMount) {
-								if ($this->isTargetAllowed($absolutePath2)) {
+								if ($sourceParentMount === $targetParentMount || $this->isTargetAllowed($absolutePath2)) {
 									/**
 									 * @var \OC\Files\Mount\MountPoint | \OC\Files\Mount\MoveableMount $mount1
 									 */
